@@ -11,151 +11,203 @@ router.post("/", async (req: Request, res: Response) => {
       return res.status(400).json({ success: false, message: "Missing required fields" });
     }
 
-    const mailOptions = {
-    from: `"Career Lab Consulting – Products Division" <${process.env.SMTP_USER}>`,
-    to: "info@careerlabconsulting.com",
-    subject: `Inquiry Regarding AI Deployment — ${company}`,
-    html: `
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="UTF-8" />
-    </head>
-    <body style="margin:0;padding:0;background-color:#0b1120;font-family:Arial,Helvetica,sans-serif;">
-        
-        <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0b1120;padding:40px 0;">
-        <tr>
-            <td align="center">
+    /* =========================================================
+       ADMIN EMAIL (Clean White SaaS Design)
+    ========================================================== */
 
-            <!-- Main Container -->
-            <table width="650" cellpadding="0" cellspacing="0" style="background-color:#111827;border-radius:12px;overflow:hidden;">
-                
-                <!-- Header -->
-                <tr>
-                <td style="background:linear-gradient(90deg,#4f46e5,#06b6d4);padding:30px;text-align:center;">
-                    <img src="https://www.careerlabconsulting.com/logo.png" width="140" alt="Career Lab Consulting" style="margin-bottom:15px;" />
-                    <h1 style="color:white;margin:0;font-size:22px;font-weight:bold;">
-                    Enterprise AI Deployment Request
-                    </h1>
-                    <p style="color:#e0e7ff;margin-top:6px;font-size:13px;">
-                    Confidential Business Inquiry
-                    </p>
-                </td>
-                </tr>
+    const adminMail = {
+  from: `"Career Lab Consulting – Products Division" <${process.env.SMTP_USER}>`,
+  to: "info@careerlabconsulting.com",
+  subject: `New AI Deployment Inquiry — ${company}`,
+  html: `
+  <!DOCTYPE html>
+  <html>
+  <body style="margin:0;padding:0;background:#f3f4f6;font-family: Arial, Helvetica, sans-serif;">
+  
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 0;">
+  <tr>
+  <td align="center">
 
-                <!-- Body -->
-                <tr>
-                <td style="padding:35px 40px;color:#e5e7eb;">
+    <table width="680" cellpadding="0" cellspacing="0"
+      style="background:#ffffff;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.06);overflow:hidden;">
+      
+      <!-- HEADER -->
+      <tr>
+        <td style="background:#020617;padding:35px;text-align:center;">
+          <img src="https://www.careerlabconsulting.com/logo.png"
+               width="150" alt="Career Lab Consulting"
+               style="display:block;margin:0 auto 18px auto;" />
+          <h1 style="margin:0;color:#ffffff;font-weight:600;font-size:20px;letter-spacing:0.3px;">
+            New Enterprise AI Inquiry
+          </h1>
+          <p style="margin-top:8px;color:#cbd5e1;font-size:14px;">
+            Confidential Lead Notification
+          </p>
+        </td>
+      </tr>
 
-                    <h2 style="color:white;font-size:18px;margin-top:0;">
-                    New Enterprise Lead Received
-                    </h2>
+      <!-- BODY -->
+      <tr>
+        <td style="padding:45px 50px;color:#1f2937;font-size:14px;line-height:1.6;">
 
-                    <!-- Info Block -->
-                    <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:25px;">
-                    
-                    <tr>
-                        <td style="padding:12px 0;border-bottom:1px solid #1f2937;">
-                        <strong style="color:#9ca3af;">Full Name</strong><br/>
-                        <span style="color:white;font-size:14px;">${name}</span>
-                        </td>
-                    </tr>
+          <h3 style="margin-top:0;color:#111827;font-weight:600;">
+            Contact Information
+          </h3>
 
-                    <tr>
-                        <td style="padding:12px 0;border-bottom:1px solid #1f2937;">
-                        <strong style="color:#9ca3af;">Company</strong><br/>
-                        <span style="color:white;font-size:14px;">${company}</span>
-                        </td>
-                    </tr>
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:20px;">
+            ${infoRow("Full Name", name)}
+            ${infoRow("Company", company)}
+            ${infoRow("Email Address", email)}
+            ${infoRow("Phone", phone || "Not Provided")}
+            ${infoRow("Industry", industry || "Not Selected")}
+            ${infoRow("Products Interested", products?.length ? products.join(", ") : "None Selected")}
+          </table>
 
-                    <tr>
-                        <td style="padding:12px 0;border-bottom:1px solid #1f2937;">
-                        <strong style="color:#9ca3af;">Email Address</strong><br/>
-                        <span style="color:white;font-size:14px;">${email}</span>
-                        </td>
-                    </tr>
+          <div style="margin-top:35px;padding:22px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;">
+            <strong style="color:#111827;">Additional Requirements</strong>
+            <p style="margin-top:10px;color:#374151;">
+              ${message || "No additional details provided."}
+            </p>
+          </div>
 
-                    <tr>
-                        <td style="padding:12px 0;border-bottom:1px solid #1f2937;">
-                        <strong style="color:#9ca3af;">Phone</strong><br/>
-                        <span style="color:white;font-size:14px;">${phone || "Not Provided"}</span>
-                        </td>
-                    </tr>
+        </td>
+      </tr>
 
-                    <tr>
-                        <td style="padding:12px 0;border-bottom:1px solid #1f2937;">
-                        <strong style="color:#9ca3af;">Industry</strong><br/>
-                        <span style="color:white;font-size:14px;">${industry || "Not Selected"}</span>
-                        </td>
-                    </tr>
+      <!-- FOOTER -->
+      <tr>
+        <td style="background:#020617;padding:30px;text-align:center;">
+          <p style="color:#cbd5e1;font-size:12px;margin:0;">
+            © ${new Date().getFullYear()} Career Lab Consulting
+          </p>
+          <p style="color:#94a3b8;font-size:11px;margin-top:6px;">
+            Enterprise AI Solutions
+          </p>
+        </td>
+      </tr>
 
-                    <tr>
-                        <td style="padding:12px 0;border-bottom:1px solid #1f2937;">
-                        <strong style="color:#9ca3af;">Products Interested In</strong><br/>
-                        <span style="color:white;font-size:14px;">
-                            ${products?.length ? products.join(", ") : "None Selected"}
-                        </span>
-                        </td>
-                    </tr>
+    </table>
 
-                    </table>
+  </td>
+  </tr>
+  </table>
 
-                    <!-- Message Section -->
-                    <div style="margin-top:30px;padding:20px;background-color:#0f172a;border-radius:8px;border:1px solid #1f2937;">
-                    <strong style="color:#9ca3af;">Additional Requirements</strong>
-                    <p style="color:white;font-size:14px;margin-top:10px;line-height:1.6;">
-                        ${message || "No additional details provided."}
-                    </p>
-                    </div>
+  </body>
+  </html>
+  `
+};
 
-                    <!-- CTA -->
-                    <div style="margin-top:35px;text-align:center;">
-                    <a href="mailto:${email}" 
-                        style="background:linear-gradient(90deg,#4f46e5,#06b6d4);
-                            padding:12px 24px;
-                            color:white;
-                            text-decoration:none;
-                            border-radius:6px;
-                            font-size:14px;
-                            font-weight:bold;">
-                        Respond to Inquiry
-                    </a>
-                    </div>
+    /* =========================================================
+       THANK YOU EMAIL TO USER
+    ========================================================== */
 
-                </td>
-                </tr>
+    const userMail = {
+  from: `"Career Lab Consulting" <${process.env.SMTP_USER}>`,
+  to: email,
+  subject: "Thank You for Contacting Career Lab Consulting",
+  html: `
+  <!DOCTYPE html>
+  <html>
+  <body style="margin:0;padding:0;background:#f3f4f6;font-family: Arial, Helvetica, sans-serif;">
+  
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 0;">
+  <tr>
+  <td align="center">
 
-                <!-- Footer -->
-                <tr>
-                <td style="background-color:#0b1120;padding:25px;text-align:center;">
-                    <p style="color:#6b7280;font-size:11px;margin:0;">
-                    © ${new Date().getFullYear()} Career Lab Consulting – AI Infrastructure Division
-                    </p>
-                    <p style="color:#6b7280;font-size:11px;margin-top:6px;">
-                    Secure · Scalable · Autonomous Systems
-                    </p>
-                </td>
-                </tr>
+    <table width="640" cellpadding="0" cellspacing="0"
+      style="background:#ffffff;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.06);overflow:hidden;">
+      
+      <!-- HEADER -->
+      <tr>
+        <td style="background:#020617;padding:35px;text-align:center;">
+          <img src="https://www.careerlabconsulting.com/logo.png"
+               width="140" alt="Career Lab Consulting"
+               style="display:block;margin:0 auto;" />
+        </td>
+      </tr>
 
-            </table>
+      <!-- BODY -->
+      <tr>
+        <td style="padding:50px;color:#1f2937;font-size:15px;line-height:1.7;">
+          
+          <h2 style="margin-top:0;color:#111827;font-weight:600;">
+            Thank You, ${name}
+          </h2>
 
-            </td>
-        </tr>
-        </table>
+          <p>
+            We appreciate your interest in partnering with Career Lab Consulting 
+            for your enterprise AI initiatives.
+          </p>
 
-    </body>
-    </html>
-    `,
-    };
+          <p>
+            Our solutions team has successfully received your inquiry and 
+            will carefully review your requirements.
+          </p>
 
-    await transporter.sendMail(mailOptions);
+          <p>
+            You can expect a response from our specialists within 
+            <strong>24–48 business hours</strong>.
+          </p>
 
-    res.json({ success: true, message: "Email sent successfully" });
+          <p style="margin-top:30px;">
+            If your request is urgent, feel free to reply directly to this email.
+          </p>
+
+          <p style="margin-top:35px;">
+            Regards,<br/>
+            <strong>Career Lab Consulting Team</strong>
+          </p>
+
+        </td>
+      </tr>
+
+      <!-- FOOTER -->
+      <tr>
+        <td style="background:#020617;padding:30px;text-align:center;">
+          <p style="color:#cbd5e1;font-size:12px;margin:0;">
+            © ${new Date().getFullYear()} Career Lab Consulting
+          </p>
+          <p style="color:#94a3b8;font-size:11px;margin-top:6px;">
+            Enterprise AI Solutions
+          </p>
+        </td>
+      </tr>
+
+    </table>
+
+  </td>
+  </tr>
+  </table>
+
+  </body>
+  </html>
+  `
+};
+
+    /* =========================================================
+       SEND BOTH EMAILS
+    ========================================================== */
+
+    await transporter.sendMail(adminMail);
+    await transporter.sendMail(userMail);
+
+    res.json({ success: true, message: "Emails sent successfully" });
 
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
+
+/* Helper for rows */
+function infoRow(label: string, value: string) {
+  return `
+    <tr>
+      <td style="padding:12px 0;border-bottom:1px solid #e5e7eb;">
+        <strong style="color:#6b7280;">${label}</strong><br/>
+        <span style="color:#111827;">${value}</span>
+      </td>
+    </tr>
+  `;
+}
 
 export default router;
