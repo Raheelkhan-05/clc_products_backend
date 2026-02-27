@@ -399,7 +399,7 @@ router.post("/", async (req: Request, res: Response) => {
     
     const adminMail = {
       from: `"Career Lab Consulting" <${process.env.SMTP_USER}>`,
-      to: "raheelkhan.work@gmail.com",
+      to: "info@careerlabconsulting.com",
       subject: `New Inquiry from ${company} — Career Lab Consulting`,
       html: `
       <!DOCTYPE html>
