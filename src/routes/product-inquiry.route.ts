@@ -95,100 +95,101 @@ function heroImageBlock() {
 
 function allProductsBlock() {
   const products = [
-    { name: "MANEE",   slug: "manee",   tagline: "Omnichannel AI Communication", features: "WhatsApp · Email · AI Voice · Sentiment", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170810/Whisk_q2n3ywmhfdmijmn10smihjytudmjrtlzmzym1in_r7izq1.jpg" },
-    { name: "CRM-X",   slug: "crmx",    tagline: "Growth Engine",                features: "Marketing Auto · Content Gen · Funnels",  url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170807/Whisk_45374b0a202b440a35f411d882154f8cdr_b1x2o9.jpg" },
-    { name: "LMS-X",   slug: "lmsx",    tagline: "Learning Intelligence",        features: "AR/VR Environments · AI Mentor · Analytics", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170806/Whisk_71afa020a7cf10086944851c0367eb01dr_ntvqoz.jpg" },
-    { name: "EduX",    slug: "edux",    tagline: "Institutional OS",             features: "ERP + CRM + LMS · Admissions · Campus Ops", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170806/Whisk_55c518517366b83ae0d4dffee8e848e2dr_uebuiy.jpg" },
-    { name: "TwinX",   slug: "twinx",   tagline: "Digital Executive Twin",       features: "CEO Reports · Dashboard · Decision AI",   url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170806/Whisk_d1c3c3a02bcc5ff9c6b40b7b7dbdd41cdr_pcl2g8.jpg" },
-    { name: "LegalOS", slug: "legalos", tagline: "Autonomous Compliance",        features: "Agreement Drafting · Risk · Contracts",   url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170807/Whisk_e03bbcb4938ecc6862b423afc929bdf5dr_zs8lfi.jpg" },
-    { name: "ERP-X",   slug: "erpx",    tagline: "Finance Command Center",       features: "Payroll · Revenue Forecast · Tax Insights", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170807/Whisk_59d6430edd2ab8a80b54195430219f7cdr_hterqs.jpg" },
-    { name: "HR-X",    slug: "hrx",     tagline: "Recruitment Intelligence",     features: "Avatar Interviews · Screening · Ranking", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170808/Whisk_7388e08f6e43689a4f14a9866c1acd1fdr_ap3vz4.jpg" },
-    { name: "SuppX",   slug: "suppx",   tagline: "Support Intelligence",         features: "24/7 Agents · Voice + Chat · Tickets",   url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170809/Whisk_ae23ef1a852206ea879496274361bfcfdr_f9rxr7.jpg" },
+    { name: "MANEE", slug: "manee", tagline: "Omnichannel AI Communication", features: "WhatsApp · Email · AI Voice · Sentiment", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170810/Whisk_q2n3ywmhfdmijmn10smihjytudmjrtlzmzym1in_r7izq1.jpg" },
+    { name: "CRM-X", slug: "crmx", tagline: "Growth Engine", features: "Marketing Auto · Content Gen · Funnels", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170807/Whisk_45374b0a202b440a35f411d882154f8cdr_b1x2o9.jpg" },
+    { name: "LMS-X", slug: "lmsx", tagline: "Learning Intelligence", features: "AR/VR Environments · AI Mentor · Analytics", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170806/Whisk_71afa020a7cf10086944851c0367eb01dr_ntvqoz.jpg" },
+    { name: "EduX", slug: "edux", tagline: "Institutional OS", features: "ERP + CRM + LMS · Admissions · Campus Ops", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170806/Whisk_55c518517366b83ae0d4dffee8e848e2dr_uebuiy.jpg" },
+    { name: "TwinX", slug: "twinx", tagline: "Digital Executive Twin", features: "CEO Reports · Dashboard · Decision AI", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170806/Whisk_d1c3c3a02bcc5ff9c6b40b7b7dbdd41cdr_pcl2g8.jpg" },
+    { name: "LegalOS", slug: "legalos", tagline: "Autonomous Compliance", features: "Agreement Drafting · Risk · Contracts", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170807/Whisk_e03bbcb4938ecc6862b423afc929bdf5dr_zs8lfi.jpg" },
+    { name: "ERP-X", slug: "erpx", tagline: "Finance Command Center", features: "Payroll · Revenue Forecast · Tax Insights", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170807/Whisk_59d6430edd2ab8a80b54195430219f7cdr_hterqs.jpg" },
+    { name: "HR-X", slug: "hrx", tagline: "Recruitment Intelligence", features: "Avatar Interviews · Screening · Ranking", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170808/Whisk_7388e08f6e43689a4f14a9866c1acd1fdr_ap3vz4.jpg" },
+    { name: "SuppX", slug: "suppx", tagline: "Support Intelligence", features: "24/7 Agents · Voice + Chat · Tickets", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170809/Whisk_ae23ef1a852206ea879496274361bfcfdr_f9rxr7.jpg" },
   ];
 
   const baseUrl = "https://www.careerlabconsulting.com";
-  const IMG_HEIGHT = 87;
 
-  const cards = products.map(p => `
-    <td class="product-col" valign="top"
-      style="width:33.33%;padding:6px;vertical-align:top;box-sizing:border-box;">
-      <table width="100%" cellpadding="0" cellspacing="0" role="presentation"
-        style="background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;border-collapse:separate;">
-        <tr>
-          <td style="padding:0;line-height:0;font-size:0;height:${IMG_HEIGHT}px;overflow:hidden;max-height:${IMG_HEIGHT}px;">
-            <img src="${p.url}" alt="${p.name}" width="100%"
-              style="display:block;width:100%;height:${IMG_HEIGHT}px;object-fit:cover;border:0;line-height:0;font-size:0;min-height:${IMG_HEIGHT}px;max-height:${IMG_HEIGHT}px;">
-          </td>
-        </tr>
-        <tr>
-          <td style="padding:0;">
-            <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
-              <tr>
-                <td style="padding:14px 14px 0 14px;vertical-align:top;">
-                  <p style="margin:0 0 4px 0;font-size:12px;font-weight:700;color:#0f172a;letter-spacing:0.3px;">${p.name}</p>
-                  <p style="margin:0 0 6px 0;font-size:10px;font-weight:600;color:#1d4ed8;line-height:1.4;">${p.tagline}</p>
-                  <div style="height:1px;background:#e2e8f0;margin:6px 0;"></div>
-                  <p style="margin:0;font-size:11px;color:#64748b;line-height:1.6;">${p.features}</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="height:12px;line-height:12px;font-size:12px;">&nbsp;</td>
-              </tr>
-              <tr>
-                <td style="padding:0 14px 14px 14px;">
-                  <a href="${baseUrl}/${p.slug}?ref=email-trial"
-                    style="display:block;text-align:center;background:#1d4ed8;color:#ffffff;font-size:11px;font-weight:700;text-decoration:none;padding:10px 12px;border-radius:6px;text-transform:uppercase;">
-                    Start Free Trial
-                  </a>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
-    </td>
-  `);
+  // Process Cloudinary URLs to crop to 16:9 aspect ratio (520x293 for high quality)
+  const getOptimizedImageUrl = (url: string) => {
+    const cloudinaryBase = "https://res.cloudinary.com/dh57lezqe/image/upload/";
+    const imagePath = url.replace(cloudinaryBase, "");
+    return `${cloudinaryBase}c_fill,w_520,h_293,g_center/${imagePath}`;
+  };
 
-  const rows: string[] = [];
-  for (let i = 0; i < cards.length; i += 3) {
-    rows.push(`
-      <tr class="product-row" style="vertical-align:top;">
-        ${cards.slice(i, i + 3).join("")}
+  // Helper function to create a single product card
+  const createCard = (p: typeof products[0]) => `
+    <table width="100%" cellpadding="0" cellspacing="0" role="presentation"
+      style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;">
+      
+      <!-- Image with fixed 16:9 aspect ratio (260px wide = 146px tall) -->
+      <tr>
+        <td style="padding:0;line-height:0;background-color:#f1f5f9;border-radius:8px 8px 0 0;overflow:hidden;">
+          <img src="${getOptimizedImageUrl(p.url)}" alt="${p.name}"
+            width="260"
+            height="146"
+            style="display:block;width:260px;height:146px;border:0;border-radius:8px 8px 0 0;-ms-interpolation-mode:bicubic;">
+        </td>
       </tr>
-    `);
-  }
 
-  return `
-    <style>
-      @media only screen and (max-width:599px) {
-        table.product-grid, tr.product-row { display:block !important; width:100% !important; }
-        tr.product-row { font-size:0 !important; line-height:0 !important; }
-        td.product-col { display:inline-block !important; width:50% !important; max-width:50% !important; box-sizing:border-box !important; vertical-align:top !important; font-size:14px !important; line-height:normal !important; }
-      }
-    </style>
+      <!-- Content -->
+      <tr>
+        <td style="padding:14px 12px;">
+          <p style="margin:0 0 4px 0;font-size:13px;font-weight:700;color:#0f172a;line-height:1.2;">
+            ${p.name}
+          </p>
+          
+          <p style="margin:0 0 6px 0;font-size:10px;font-weight:600;color:#1d4ed8;line-height:1.2;">
+            ${p.tagline}
+          </p>
+          
+          <p style="margin:0 0 10px 0;font-size:10px;color:#64748b;line-height:1.4;">
+            ${p.features}
+          </p>
+          
+          <a href="${baseUrl}/${p.slug}?ref=email-trial"
+            style="display:inline-block;background:#1d4ed8;color:#ffffff;
+            font-size:10px;font-weight:700;text-decoration:none;
+            padding:7px 12px;border-radius:5px;">
+            Try Free - 14 Days
+          </a>
+        </td>
+      </tr>
+    </table>
+  `;
 
+  // Build 2-column rows with fixed table layout
+  let rows = '';
+  for (let i = 0; i < products.length; i += 2) {
+    const leftProduct = products[i];
+    const rightProduct = products[i + 1];
+    
+    rows += `
     <tr>
-      <td style="padding:36px 36px 0 36px;">
-        <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin-bottom:24px;">
+      <td style="padding:0 0 12px 0;">
+        <table width="540" cellpadding="0" cellspacing="0" role="presentation">
           <tr>
-            <td align="center">
-              <p style="margin:0 0 6px 0;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#1d4ed8;">
-                The Autonomous Stack
-              </p>
-              <h3 style="margin:0 0 10px 0;font-size:20px;font-weight:800;color:#0f172a;">
-                9 AI Products. One Unified Vision.
-              </h3>
-              <p style="margin:0;font-size:13px;color:#475569;line-height:1.6;max-width:420px;">
-                Explore our enterprise AI suite transforming every business function — each available with a <i><b>14-day free trial</b></i>.
-              </p>
+            <td width="260" style="width:260px;vertical-align:top;">
+              ${createCard(leftProduct)}
+            </td>
+            <td width="20" style="width:20px;"></td>
+            <td width="260" style="width:260px;vertical-align:top;">
+              ${rightProduct ? createCard(rightProduct) : ''}
             </td>
           </tr>
         </table>
-        <table class="product-grid" width="100%" cellpadding="0" cellspacing="0" role="presentation">
-          ${rows.join("")}
-        </table>
       </td>
-    </tr>`;
+    </tr>
+    `;
+  }
+
+  return `
+  <tr>
+    <td style="padding:20px 18px;">
+      <table width="540" cellpadding="0" cellspacing="0" role="presentation">
+        ${rows}
+      </table>
+    </td>
+  </tr>
+  `;
 }
 
 function videoCtaBlock() {
@@ -725,7 +726,7 @@ router.post("/inquiry", async (req: Request, res: Response) => {
 
     await transporter.sendMail({
       from: `"Career Lab Consulting" <${process.env.SMTP_USER}>`,
-      to: "info@careerlabconsulting.com",
+      to: "raheelkhan.work@gmail.com",
       subject: `Product Inquiry: ${productName} — ${company}`,
       html: buildAdminInquiryMail({ name, company, email, phone, message, productName, productTagline, currentYear, logoUrl }),
     });
@@ -755,7 +756,7 @@ router.post("/booking", async (req: Request, res: Response) => {
 
     await transporter.sendMail({
       from: `"Career Lab Consulting" <${process.env.SMTP_USER}>`,
-      to: "info@careerlabconsulting.com",
+      to: "raheelkhan.work@gmail.com",
       subject: `Booking: ${productName} — ${name} on ${date} at ${slot}`,
       html: buildAdminBookingMail({ name, company, email, phone, date, slot, productName, productTagline, currentYear, logoUrl }),
     });
