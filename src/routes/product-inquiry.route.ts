@@ -726,7 +726,7 @@ router.post("/inquiry", async (req: Request, res: Response) => {
 
     await transporter.sendMail({
       from: `"Career Lab Consulting" <${process.env.SMTP_USER}>`,
-      to: "raheelkhan.work@gmail.com",
+      to: "info@careerlabconsulting.com",
       subject: `Product Inquiry: ${productName} — ${company}`,
       html: buildAdminInquiryMail({ name, company, email, phone, message, productName, productTagline, currentYear, logoUrl }),
     });
@@ -756,7 +756,7 @@ router.post("/booking", async (req: Request, res: Response) => {
 
     await transporter.sendMail({
       from: `"Career Lab Consulting" <${process.env.SMTP_USER}>`,
-      to: "raheelkhan.work@gmail.com",
+      to: "info@careerlabconsulting.com",
       subject: `Booking: ${productName} — ${name} on ${date} at ${slot}`,
       html: buildAdminBookingMail({ name, company, email, phone, date, slot, productName, productTagline, currentYear, logoUrl }),
     });
