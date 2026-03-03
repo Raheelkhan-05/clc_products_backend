@@ -1,24 +1,20 @@
+"use strict";
 //contact.route.ts
-
-import { Router, Request, Response } from "express";
-import { transporter } from "../utils/mailer";
-
-const router = Router();
-
-function buildProductHtml(products: string[] | undefined): string {
-  const textStyle = "font-size:14px; color:#0f172a; font-weight:600;";
-  const diamondStyle = "color:#6366f1; margin-right:8px; font-size:12px;";
-
-  if (!products || products.length === 0) {
-    return `<span style="${textStyle}">General Inquiry</span>`;
-  }
-  
-  if (products.length === 1) {
-    return `<span style="${textStyle}">${products[0]}</span>`;
-  }
-
-  // AI-Style List with Diamond Icons
-  return `
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const mailer_1 = require("../utils/mailer");
+const router = (0, express_1.Router)();
+function buildProductHtml(products) {
+    const textStyle = "font-size:14px; color:#0f172a; font-weight:600;";
+    const diamondStyle = "color:#6366f1; margin-right:8px; font-size:12px;";
+    if (!products || products.length === 0) {
+        return `<span style="${textStyle}">General Inquiry</span>`;
+    }
+    if (products.length === 1) {
+        return `<span style="${textStyle}">${products[0]}</span>`;
+    }
+    // AI-Style List with Diamond Icons
+    return `
     <ul style="margin:0; padding:0; list-style-type:none;">
       ${products.map((p) => `
         <li style="${textStyle} padding:4px 0; display:flex; align-items:center;">
@@ -27,10 +23,9 @@ function buildProductHtml(products: string[] | undefined): string {
       `).join("")}
     </ul>`;
 }
-
-function detailRow(label: string, valueHtml: string, alt: boolean = false) {
-  const bg = alt ? "#f8fafc" : "#ffffff";
-  return `
+function detailRow(label, valueHtml, alt = false) {
+    const bg = alt ? "#f8fafc" : "#ffffff";
+    return `
     <tr>
       <td style="padding:12px 20px;border-bottom:1px solid #e2e8f0;width:32%;vertical-align:top;background-color:${bg};">
         <span style="font-size:11px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:1px;">${label}</span>
@@ -41,49 +36,44 @@ function detailRow(label: string, valueHtml: string, alt: boolean = false) {
     </tr>
   `;
 }
-
-function sharedFooter(currentYear: number) {
-  const socials = [
-    {
-      label: "Facebook",
-      href: "https://www.facebook.com/careerlabconsultingofficial",
-      src: "https://upload.wikimedia.org/wikipedia/en/thumb/0/04/Facebook_f_logo_%282021%29.svg/1280px-Facebook_f_logo_%282021%29.svg.png",
-    },
-    {
-      label: "X",
-      href: "https://x.com/CareerLabConsul",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/X_logo_2023.svg/500px-X_logo_2023.svg.png",
-    },
-    {
-      label: "Instagram",
-      href: "https://www.instagram.com/careerlabconsultingofficial",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1280px-Instagram_icon.png",
-    },
-    {
-      label: "LinkedIn",
-      href: "https://www.linkedin.com/company/38144534",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/LinkedIn_icon.svg/250px-LinkedIn_icon.svg.png",
-    },
-    {
-      label: "YouTube",
-      href: "https://www.youtube.com/@careerlabconsulting4691",
-      src: "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
-    },
-  ];
-
-  const iconCells = socials
-    .map(
-      (s) => `
+function sharedFooter(currentYear) {
+    const socials = [
+        {
+            label: "Facebook",
+            href: "https://www.facebook.com/careerlabconsultingofficial",
+            src: "https://upload.wikimedia.org/wikipedia/en/thumb/0/04/Facebook_f_logo_%282021%29.svg/1280px-Facebook_f_logo_%282021%29.svg.png",
+        },
+        {
+            label: "X",
+            href: "https://x.com/CareerLabConsul",
+            src: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/X_logo_2023.svg/500px-X_logo_2023.svg.png",
+        },
+        {
+            label: "Instagram",
+            href: "https://www.instagram.com/careerlabconsultingofficial",
+            src: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1280px-Instagram_icon.png",
+        },
+        {
+            label: "LinkedIn",
+            href: "https://www.linkedin.com/company/38144534",
+            src: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/LinkedIn_icon.svg/250px-LinkedIn_icon.svg.png",
+        },
+        {
+            label: "YouTube",
+            href: "https://www.youtube.com/@careerlabconsulting4691",
+            src: "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
+        },
+    ];
+    const iconCells = socials
+        .map((s) => `
         <td style="padding:0 10px;">
           <a href="${s.href}" target="_blank" style="text-decoration:none;display:inline-block;">
             <img src="${s.src}" width="22" alt="${s.label}" style="display:block;border:0;">
           </a>
         </td>
-      `
-    )
-    .join("");
-
-  return `
+      `)
+        .join("");
+    return `
     <tr>
       <td style="background-color:#e6ecfa;padding:36px 36px;text-align:center;">
         
@@ -122,11 +112,9 @@ function sharedFooter(currentYear: number) {
     </tr>
   `;
 }
-
 function heroImageBlock() {
-  const heroImageUrl = "https://res.cloudinary.com/dh57lezqe/image/upload/v1772167158/Banner_dim1qj.jpg";
-
-  return `
+    const heroImageUrl = "https://res.cloudinary.com/dh57lezqe/image/upload/v1772167158/Banner_dim1qj.jpg";
+    return `
     <tr>
       <td style="background-color:#020c1b;padding:0;line-height:0;">
 
@@ -162,25 +150,21 @@ function heroImageBlock() {
     </tr>
   `;
 }
-
 function allProductsBlock() {
-  const products = [
-    { name: "MANEE",   slug: "manee",   tagline: "Omnichannel AI Communication", features: "WhatsApp · Email · AI Voice · Sentiment", url:"https://res.cloudinary.com/dh57lezqe/image/upload/v1772170810/Whisk_q2n3ywmhfdmijmn10smihjytudmjrtlzmzym1in_r7izq1.jpg" },
-    { name: "CRM-X",   slug: "crmx",    tagline: "Growth Engine", features: "Marketing Auto · Content Gen · Funnels", url:"https://res.cloudinary.com/dh57lezqe/image/upload/v1772170807/Whisk_45374b0a202b440a35f411d882154f8cdr_b1x2o9.jpg"  },
-    { name: "LMS-X",   slug: "lmsx",    tagline: "Learning Intelligence", features: "AR/VR Environments · AI Mentor · Analytics", url:"https://res.cloudinary.com/dh57lezqe/image/upload/v1772170806/Whisk_71afa020a7cf10086944851c0367eb01dr_ntvqoz.jpg" },
-    { name: "EduX",    slug: "edux",    tagline: "Institutional OS", features: "ERP + CRM + LMS · Admissions · Campus Ops", url:"https://res.cloudinary.com/dh57lezqe/image/upload/v1772170806/Whisk_55c518517366b83ae0d4dffee8e848e2dr_uebuiy.jpg" },
-    { name: "TwinX",   slug: "twinx",   tagline: "Digital Executive Twin", features: "CEO Reports · Dashboard · Decision AI", url:"https://res.cloudinary.com/dh57lezqe/image/upload/v1772170806/Whisk_d1c3c3a02bcc5ff9c6b40b7b7dbdd41cdr_pcl2g8.jpg" },
-    { name: "LegalOS", slug: "legalos", tagline: "Autonomous Compliance", features: "Agreement Drafting · Risk · Contracts" , url:"https://res.cloudinary.com/dh57lezqe/image/upload/v1772170807/Whisk_e03bbcb4938ecc6862b423afc929bdf5dr_zs8lfi.jpg" },
-    { name: "ERP-X",   slug: "erpx",    tagline: "Finance Command Center", features: "Payroll · Revenue Forecast · Tax Insights", url:"https://res.cloudinary.com/dh57lezqe/image/upload/v1772170807/Whisk_59d6430edd2ab8a80b54195430219f7cdr_hterqs.jpg" },
-    { name: "HR-X",    slug: "hrx",     tagline: "Recruitment Intelligence", features: "Avatar Interviews · Screening · Ranking", url:"https://res.cloudinary.com/dh57lezqe/image/upload/v1772170808/Whisk_7388e08f6e43689a4f14a9866c1acd1fdr_ap3vz4.jpg" },
-    { name: "SuppX",   slug: "suppx",   tagline: "Support Intelligence", features: "24/7 Agents · Voice + Chat · Tickets", url:"https://res.cloudinary.com/dh57lezqe/image/upload/v1772170809/Whisk_ae23ef1a852206ea879496274361bfcfdr_f9rxr7.jpg" },
-  ];
-
-  const baseUrl = "https://www.careerlabconsulting.com";
-
-  const IMG_HEIGHT = 87; // px — enforces 16:9 crop for all clients
-
-  const cards = products.map(p => `
+    const products = [
+        { name: "MANEE", slug: "manee", tagline: "Omnichannel AI Communication", features: "WhatsApp · Email · AI Voice · Sentiment", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170810/Whisk_q2n3ywmhfdmijmn10smihjytudmjrtlzmzym1in_r7izq1.jpg" },
+        { name: "CRM-X", slug: "crmx", tagline: "Growth Engine", features: "Marketing Auto · Content Gen · Funnels", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170807/Whisk_45374b0a202b440a35f411d882154f8cdr_b1x2o9.jpg" },
+        { name: "LMS-X", slug: "lmsx", tagline: "Learning Intelligence", features: "AR/VR Environments · AI Mentor · Analytics", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170806/Whisk_71afa020a7cf10086944851c0367eb01dr_ntvqoz.jpg" },
+        { name: "EduX", slug: "edux", tagline: "Institutional OS", features: "ERP + CRM + LMS · Admissions · Campus Ops", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170806/Whisk_55c518517366b83ae0d4dffee8e848e2dr_uebuiy.jpg" },
+        { name: "TwinX", slug: "twinx", tagline: "Digital Executive Twin", features: "CEO Reports · Dashboard · Decision AI", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170806/Whisk_d1c3c3a02bcc5ff9c6b40b7b7dbdd41cdr_pcl2g8.jpg" },
+        { name: "LegalOS", slug: "legalos", tagline: "Autonomous Compliance", features: "Agreement Drafting · Risk · Contracts", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170807/Whisk_e03bbcb4938ecc6862b423afc929bdf5dr_zs8lfi.jpg" },
+        { name: "ERP-X", slug: "erpx", tagline: "Finance Command Center", features: "Payroll · Revenue Forecast · Tax Insights", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170807/Whisk_59d6430edd2ab8a80b54195430219f7cdr_hterqs.jpg" },
+        { name: "HR-X", slug: "hrx", tagline: "Recruitment Intelligence", features: "Avatar Interviews · Screening · Ranking", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170808/Whisk_7388e08f6e43689a4f14a9866c1acd1fdr_ap3vz4.jpg" },
+        { name: "SuppX", slug: "suppx", tagline: "Support Intelligence", features: "24/7 Agents · Voice + Chat · Tickets", url: "https://res.cloudinary.com/dh57lezqe/image/upload/v1772170809/Whisk_ae23ef1a852206ea879496274361bfcfdr_f9rxr7.jpg" },
+    ];
+    const baseUrl = "https://www.careerlabconsulting.com";
+    const IMG_HEIGHT = 87; // px — enforces 16:9 crop for all clients
+    const cards = products.map(p => `
     <td class="product-col" valign="top"
       style="width:33.33%;padding:6px;vertical-align:top;box-sizing:border-box;">
 
@@ -259,18 +243,16 @@ function allProductsBlock() {
       </table>
     </td>
   `);
-
-  // Group into rows of 3 for desktop
-  const rows: string[] = [];
-  for (let i = 0; i < cards.length; i += 3) {
-    rows.push(`
+    // Group into rows of 3 for desktop
+    const rows = [];
+    for (let i = 0; i < cards.length; i += 3) {
+        rows.push(`
       <tr class="product-row" style="vertical-align:top;">
         ${cards.slice(i, i + 3).join("")}
       </tr>
     `);
-  }
-
-  return `
+    }
+    return `
 
     <style>
       @media only screen and (max-width:599px) {
@@ -331,9 +313,8 @@ function allProductsBlock() {
     </tr>
   `;
 }
-
 function videoCtaBlock() {
-  return `
+    return `
     <tr>
       <td style="padding:28px 36px 0 36px;">
         <table width="100%" cellpadding="0" cellspacing="0" role="presentation"
@@ -385,25 +366,20 @@ function videoCtaBlock() {
     </tr>
   `;
 }
-
-router.post("/", async (req: Request, res: Response) => {
-  try {
-    const { name, company, email, phone, industry, products, message } = req.body;
-
-    if (!name || !company || !email) {
-      return res.status(400).json({ success: false, message: "Missing required fields" });
-    }
-
-    const currentYear = new Date().getFullYear();
-    const logoUrl = "https://www.careerlabconsulting.com/logo.png";
-    const productHtml = buildProductHtml(products);
-
-    
-    const adminMail = {
-      from: `"Career Lab Consulting" <${process.env.SMTP_USER}>`,
-      to: "info@careerlabconsulting.com",
-      subject: `New Inquiry from ${company} — Career Lab Consulting`,
-      html: `
+router.post("/", async (req, res) => {
+    try {
+        const { name, company, email, phone, industry, products, message } = req.body;
+        if (!name || !company || !email) {
+            return res.status(400).json({ success: false, message: "Missing required fields" });
+        }
+        const currentYear = new Date().getFullYear();
+        const logoUrl = "https://www.careerlabconsulting.com/logo.png";
+        const productHtml = buildProductHtml(products);
+        const adminMail = {
+            from: `"Career Lab Consulting" <${process.env.SMTP_USER}>`,
+            to: "info@careerlabconsulting.com",
+            subject: `New Inquiry from ${company} — Career Lab Consulting`,
+            html: `
       <!DOCTYPE html>
       <html lang="en">
       <head>
@@ -456,9 +432,9 @@ router.post("/", async (req: Request, res: Response) => {
                   <td style="padding:24px 36px 0 36px;">
                     <table width="100%" cellpadding="0" cellspacing="0" role="presentation"
                       style="border-radius:8px;overflow:hidden;border:1px solid #e2e8f0;">
-                      ${detailRow("Name",     `<span style="font-size:14px;color:#0f172a;font-weight:500;">${name}</span>`,     false)}
-                      ${detailRow("Email",    `<span style="font-size:14px;color:#1d4ed8;font-weight:500;">${email}</span>`,    true)}
-                      ${detailRow("Phone",    `<span style="font-size:14px;color:#0f172a;font-weight:500;">${phone || "Not provided"}</span>`,    false)}
+                      ${detailRow("Name", `<span style="font-size:14px;color:#0f172a;font-weight:500;">${name}</span>`, false)}
+                      ${detailRow("Email", `<span style="font-size:14px;color:#1d4ed8;font-weight:500;">${email}</span>`, true)}
+                      ${detailRow("Phone", `<span style="font-size:14px;color:#0f172a;font-weight:500;">${phone || "Not provided"}</span>`, false)}
                       ${detailRow("Industry", `<span style="font-size:14px;color:#0f172a;font-weight:500;">${industry || "Not specified"}</span>`, true)}
                       ${detailRow("Products", productHtml, false)}
                     </table>
@@ -497,13 +473,12 @@ router.post("/", async (req: Request, res: Response) => {
         </table>
       </body>
       </html>`
-    };
-
-    const userMail = {
-      from: `"Career Lab Consulting" <${process.env.SMTP_USER}>`,
-      to: email,
-      subject: "We've Received Your Inquiry — Career Lab Consulting",
-      html: `
+        };
+        const userMail = {
+            from: `"Career Lab Consulting" <${process.env.SMTP_USER}>`,
+            to: email,
+            subject: "We've Received Your Inquiry — Career Lab Consulting",
+            html: `
       <!DOCTYPE html>
       <html lang="en">
       <head>
@@ -643,17 +618,14 @@ router.post("/", async (req: Request, res: Response) => {
         </table>
       </body>
       </html>`
-    };
-
-    await transporter.sendMail(adminMail);
-    await transporter.sendMail(userMail);
-
-    res.json({ success: true, message: "Emails sent successfully" });
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Server error" });
-  }
+        };
+        await mailer_1.transporter.sendMail(adminMail);
+        await mailer_1.transporter.sendMail(userMail);
+        res.json({ success: true, message: "Emails sent successfully" });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
 });
-
-export default router;
+exports.default = router;

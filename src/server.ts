@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import contactRoute from "./routes/contact.route";
+import productInquiryRoute from "./routes/product-inquiry.route";
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/contact", contactRoute);
+app.use("/api/product-inquiry", productInquiryRoute);
 
 const PORT = process.env.PORT || 5000;
 
